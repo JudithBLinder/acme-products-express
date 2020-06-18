@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { HashRouter, Route, Link, Switch, Redirect } from 'react-router-dom';
+import Create from './Create';
+import Products from './Products';
 
 const app = document.querySelector('#app');
 
@@ -22,24 +24,6 @@ const Nav = ({ path, products }) => {
   );
 };
 
-const Products = ({ products }) => {
-  console.log('in products', products.length);
-  return (
-    <ul className="list-group list-group-flush">
-      {products.map((product) => (
-        <div key={product.id} className="product">
-          <li key={product.id} className="list-group-item">
-            {`${product.name}, price is: $${product.price}`}
-          </li>
-          <button type="button" className="btn btn-outline-primary">
-            Destroy
-          </button>
-        </div>
-      ))}
-    </ul>
-  );
-};
-
 class Application extends Component {
   state = {
     products: [],
@@ -47,17 +31,23 @@ class Application extends Component {
 
   componentDidMount() {
     axios.get(`${API_URL}/products`).then(({ data }) => {
-      console.log('axios', data.products);
       this.setState({
         products: data.products,
       });
     });
   }
 
-  async destroy() {}
+  destroy(product) {
+    axios.delete(`${API_URL}/products/${product.id}`);
+  }
+
+  post(product) {
+    axios.post(`${API_URL}/products`, product);
+  }
 
   render() {
     const { products } = this.state;
+    const { destroy, post } = this;
     console.log(this.state);
     return (
       <Fragment>
@@ -72,7 +62,13 @@ class Application extends Component {
             <Route exact path="/home" render={() => <h1>HOME</h1>} />
             <Route
               path="/products"
-              render={() => <Products products={products} />}
+              render={() => <Products products={products} destroy={destroy} />}
+            />
+            <Route
+              path="/create"
+              render={() => (
+                <Create products={products} post={post.bind(this)} />
+              )}
             />
           </Switch>
         </HashRouter>

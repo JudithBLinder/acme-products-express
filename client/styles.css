@@ -20,3 +20,15 @@ nav {
 li {
     width: 75%;
 }
+
+.inputContainer {
+    margin: auto;
+    width: 50%;
+    height: 150px;
+    border: 2px black solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+
+}
