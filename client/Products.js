@@ -13,9 +13,9 @@ class Products extends React.Component {
                 {`${product.name}, price is: $${product.price}`}
               </li>
               <button
-                type="submit"
                 className="btn btn-outline-primary"
-                onClick={() => {
+                onClick={(ev) => {
+                  ev.preventDefault();
                   destroy(product);
                 }}
               >

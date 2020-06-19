@@ -1,1 +1,13 @@
-[{"name":"Foo","id":1,"price":5},{"name":"Bazz","id":2,"price":4},{"name":"Cheese","id":3,"price":10},{"name":"Jelly","id":4,"price":12},{"name":"milk","id":5,"price":2}]
+[{
+    "name": "Foo",
+    "id": 1,
+    "price": 5
+}, {
+    "name": "Milk",
+    "id": 2,
+    "price": 3
+}, {
+    "name": "Bread",
+    "id": 3,
+    "price": 6
+}]

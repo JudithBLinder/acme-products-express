@@ -31,8 +31,6 @@ class Create extends React.Component {
             }}
           />
           <button
-            type="submit"
-            value="submit"
             onClick={() => {
               let product = this.state;
               post(product);

@@ -39,16 +39,22 @@ class Application extends Component {
 
   destroy(product) {
     axios.delete(`${API_URL}/products/${product.id}`);
+    this.setState({
+      products: this.state.products.filter((pro) => pro.id !== product.id),
+    });
   }
 
   post(product) {
-    axios.post(`${API_URL}/products`, product);
+    axios.post(`${API_URL}/products`, product).then(({ data }) =>
+      this.setState({
+        products: data.data,
+      })
+    );
   }
 
   render() {
     const { products } = this.state;
     const { destroy, post } = this;
-    console.log(this.state);
     return (
       <Fragment>
         <h1> Acme Products </h1>
@@ -62,7 +68,9 @@ class Application extends Component {
             <Route exact path="/home" render={() => <h1>HOME</h1>} />
             <Route
               path="/products"
-              render={() => <Products products={products} destroy={destroy} />}
+              render={() => (
+                <Products products={products} destroy={destroy.bind(this)} />
+              )}
             />
             <Route
               path="/create"

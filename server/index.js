@@ -33,7 +33,6 @@ const DB_PATH = path.join(__dirname, './products.json');
 //Logging middleware
 app.use((req, res, next) => {
   console.log(chalk.cyan(`Request made to: ${req.path}`));
-
   next();
 });
 
@@ -90,7 +89,6 @@ app.post('/api/products', (req, res) => {
   const id = req.params.id * 1;
   const { name, price } = req.body;
 
-  console.log(req.products.filter((pro) => pro.name === name).length);
   if (req.products.filter((pro) => pro.name === name).length === 1) {
     res.status(400).send({
       message: `Product ${name} already exists.`,
@@ -114,6 +112,7 @@ app.post('/api/products', (req, res) => {
 
     writeFileP(DB_PATH, newProducts).then(() => {
       res.send({
+        data: newProducts,
         message: `Product ${name} added!`,
       });
     });
